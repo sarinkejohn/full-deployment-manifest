@@ -14,19 +14,21 @@ spec:
     spec:
       containers:
       - name: springboot-app
-        image: nbc-devops-transaction:latest
+        image: sarinkejohn/springboot-app:latest
         ports:
         - containerPort: 8080
+      imagePullSecrets:
+      - name: dockerhub-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: springboot-service
 spec:
-  type: NodePort
   selector:
     app: springboot-app
+  type: NodePort
   ports:
-    - protocol: TCP
-      port: 8080
+    - port: 8080
       targetPort: 8080
+      nodePort: 30080
